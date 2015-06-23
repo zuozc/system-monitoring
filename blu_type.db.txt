@@ -1,0 +1,1 @@
+disk_usage writable:GAUGE:0:U readable:GAUGE:0:U usage:GAUGE:0:U
