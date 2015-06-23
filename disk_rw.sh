@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# check disk I/O performance
+#
 # usage: disk_rw_test.sh -f=number[m/G] -b=number -d=directory
 # -f, size of file for test, a number with a [m/g] means KB/GB
 # -b, blocks for record, a number
