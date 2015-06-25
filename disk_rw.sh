@@ -7,6 +7,7 @@
 # -b, blocks for record, a number
 # -d, the absolute directory where temparary files will be created.
 # --log, log file for iozone output.
+# --addr, email addresses splitted by ',' where detail send to after iozone test done.
 
 command -v iozone >/dev/null 2>&1 || { echo "iozone has not been installed yet, and program will install it now."; sudo apt-get install -y iozone3; }
 command -v sendmail >/dev/null 2>&1 || { echo "sendmail has not been installed yet, and program will install it now."; sudo apt-get install -y sendmail; }
@@ -15,7 +16,8 @@ process_num=(1 5 10 20 50)  # number of processes used in test
 DEFAULT_FILE_SIZE=3200m  # default size of temporary file used for r/w
 DEFAULT_BLOCK_SIZE=4 # default size of block
 DEFAULT_DIRECTORY="`pwd`" # default directory where iozone creats temporary files
-DEFAULT_LOG="iozone_disk_rw.$(date +%Y%m%d%H%M).log"
+DEFAULT_LOG="iozone_disk_rw.$(date +%Y%m%d%H%M).log"  # default log of iozone output
+DEFAULT_RECEIPTS="bjzuozc@cn.ibm.com" # default mail address where to send after iozone test done
 
 # process argments
 process_input_args() {
@@ -40,6 +42,11 @@ process_input_args() {
         log_file="${opt#*=}"
         shift
         ;;
+
+      --addr=*)
+        recipients="${opt#*=}"
+        shift
+        ;;
     esac
   done
 }
@@ -50,6 +57,7 @@ file_size=${file_size:-$DEFAULT_FILE_SIZE}  # size of temporary file used for r/
 block_size=${block_size:-$DEFAULT_BLOCK_SIZE} # size of block
 directory=${directory:-$DEFAULT_DIRECTORY}  # directory where iozone creates temporary files.
 log_file=${log_file:-$DEFAULT_LOG}
+recipients=${recipients:-$DEFAULT_RECEIPTS}
 
 len=${#file_size}; ((len --))
 # echo $len
@@ -75,7 +83,6 @@ for p_num in ${process_num[@]}; do
 done
 
 # send mail when check done.
-recipients="bjzuozc@cn.ibm.com"
 subject="IOZone - I/O Performance Test"
 # from="your_mail@something.com"
 
