@@ -6,8 +6,10 @@
 # -f, size of file for test, a number with a [m/g] means KB/GB
 # -b, blocks for record, a number
 # -d, the absolute directory where temparary files will be created.
+# --log, log file for iozone output.
 
 command -v iozone >/dev/null 2>&1 || { echo "iozone has not been installed yet, and program will install it now."; sudo apt-get install -y iozone3; }
+command -v sendmail >/dev/null 2>&1 || { echo "sendmail has not been installed yet, and program will install it now."; sudo apt-get install -y sendmail; }
 
 process_num=(1 5 10 20 50)  # number of processes used in test
 DEFAULT_FILE_SIZE=3200m  # default size of temporary file used for r/w
