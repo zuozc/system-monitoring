@@ -70,7 +70,7 @@ for p_num in ${process_num[@]}; do
   i=0
   tmp_files=
   while ((i < $p_num)); do
-    tmp_files="${tmp_files} $directory/iozone_process_logsile$i"
+    tmp_files="${tmp_files} $directory/iozone_tmpfile$i"
     ((i++))
   done
 
@@ -89,9 +89,9 @@ subject="IOZone - I/O Performance Test"
 # another way to process logs
 process_logs () {
   cat $log_file | grep "Initial write\|Rewrite\|Read\|Re-read\|Random read\|Random write" > tmp.log
-  
+
   while read line; do
-  
+
     tmp=$(($i % 6))
     if [[ $tmp -eq 0 ]]; then 
       p_num=${process_num[$(($i / 6))]}
